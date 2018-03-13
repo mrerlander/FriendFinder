@@ -1,7 +1,7 @@
 var express = require("express");
-var router  = express.Router();
+var router = express.Router();
 var bodyParser = require("body-parser");
-var friends = require("../data/friends");
+var friends = require("../data/friends")
 
 var app = express();
 
@@ -13,6 +13,27 @@ router.get("/friends", function(req, res){
 });
 
 router.post("/friends", function(req, res){
-    var results = req.body;
+    var surveyResults = req.body;
+    var answerArr = surveyResults.answers;
+    
+    var diff = 0;
+    var diffs = [];
 
-})
+    for (var i = 0; i < friends.length; i++){
+        var diff = 0;
+        for (var l = 0; l < answerArr.length; l++){
+            if (parseInt(answerArr[l]) > parseInt(friends[i].answers[l])){
+                diff += parseInt(answerArr[l]) - parseInt(friends[i].answers[l]);
+            } else {
+                diff += parseInt(friends[i].answers[l]) - parseInt(answerArr[l])
+            }
+        }
+        diffs.push(diff);
+    }
+
+    var match = diffs.indexOf(Math.min(...diffs));
+    
+    res.send(friends[match]);
+});
+
+module.exports = router;
