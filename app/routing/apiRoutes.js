@@ -16,6 +16,7 @@ router.post("/friends", function(req, res){
     var surveyResults = req.body;
     var answerArr = surveyResults.answers;
     
+    
     var diff = 0;
     var diffs = [];
 
@@ -34,6 +35,7 @@ router.post("/friends", function(req, res){
     var match = diffs.indexOf(Math.min(...diffs));
     
     res.send(friends[match]);
+    friends.push(surveyResults);
 });
 
 module.exports = router;
