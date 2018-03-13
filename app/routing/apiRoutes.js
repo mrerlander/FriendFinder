@@ -14,8 +14,7 @@ router.get("/friends", function(req, res){
 
 router.post("/friends", function(req, res){
     var surveyResults = req.body;
-    var answerArr = surveyResults.answers;
-    
+    var answerArr = surveyResults.answers;    
     
     var diff = 0;
     var diffs = [];
@@ -23,11 +22,7 @@ router.post("/friends", function(req, res){
     for (var i = 0; i < friends.length; i++){
         var diff = 0;
         for (var l = 0; l < answerArr.length; l++){
-            if (parseInt(answerArr[l]) > parseInt(friends[i].answers[l])){
-                diff += parseInt(answerArr[l]) - parseInt(friends[i].answers[l]);
-            } else {
-                diff += parseInt(friends[i].answers[l]) - parseInt(answerArr[l])
-            }
+                diff += Math.abs(parseInt(answerArr[l]) - parseInt(friends[i].answers[l]));
         }
         diffs.push(diff);
     }
